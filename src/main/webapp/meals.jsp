@@ -1,37 +1,46 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <html>
 <head>
-    <title>Meals Table</title>
-
+    <title>Meal list</title>
     <style>
-        table,th,td
-        {
-            border:1px solid black;
+        .normal {
+            color: green;
+        }
+
+        .exceeded {
+            color: red;
         }
     </style>
 </head>
 <body>
-<center>
-<h1>Meals</h1>
-<table>
-
-   <tr>
-       <th width="120"><b>Date</b></th>
-       <th width="120"><b>Description</b></th>
-       <th width="120"><b>Calories</b></th>
-       <th width="60"><b>Delete</b></th>
-   </tr>
-    <tr>
-    <c:forEach var="meals" items="${meals}">
-        <td>${meals.dateTime}</td>
-        <td>${meals.description}</td>
-        <td>${meals.calories}</td>
-        <td>${meals.exceed}</td>
-    </tr>
-    </c:forEach>
-</table>
-</center>
- </body>
+<section>
+    <h2><a href="index.html">Home</a></h2>
+    <h2>Meal list</h2>
+    <hr>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Calories</th>
+        </tr>
+        </thead>
+        <c:forEach items="${meals}" var="meal">
+            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                <td>
+                        <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
+                        <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
+                        ${fn:formatDateTime(meal.dateTime)}
+                </td>
+                <td>${meal.description}</td>
+                <td>${meal.calories}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</section>
+</body>
 </html>

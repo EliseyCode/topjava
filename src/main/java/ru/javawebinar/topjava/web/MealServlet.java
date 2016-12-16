@@ -1,31 +1,26 @@
 package ru.javawebinar.topjava.web;
 
-import ru.javawebinar.topjava.model.MealWithExceed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.List;
 
 /**
- * Created by Elisey on 14.12.2016.
+ * User: gkislin
+ * Date: 19.08.2014
  */
 public class MealServlet extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
 
-    List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
-
-
-
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("meals", mealWithExceeds);
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/meals.jsp");
-        requestDispatcher.forward(request, response);
-//        request.getRequestDispatcher("/meals.jsp").forward(request, response);
-
+        LOG.info("getAll");
+        request.setAttribute("meals", MealsUtil.getWithExceeded(MealsUtil.MEALS, MealsUtil.DEFAULT_CALORIES_PER_DAY));
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 }
