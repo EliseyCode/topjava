@@ -50,4 +50,8 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         repository.save(user);
     }
+
+    public void setRepository(UserRepository repository) {
+        this.repository = repository;
+    }
 }
