@@ -5,10 +5,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--&lt;!&ndash;-->
-        <bean class="ru.javawebinar.topjava.repository.mock.MockUserRepositoryImpl" id="mockUserRepository"/>
+        <bean class="ru.javawebinar.topjava.repository.jdbc.JdbcUserRepositoryImpl" id="JdbcUserRepository"/>
 
         <bean class="ru.javawebinar.topjava.service.UserServiceImpl">
-            <property name="repository" ref="mockUserRepository"/>
+            <property name="repository" ref="JdbcUserRepository"/>
         </bean>
     <!--&ndash;&gt;-->
 
